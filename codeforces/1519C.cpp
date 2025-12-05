@@ -1,0 +1,80 @@
+#include <algorithm>
+#include <array>
+#include <bitset> 
+#include <climits>
+#include <cstdint>
+#include <cmath>
+#include <cstdio>
+#include <cstdlib>
+#include <cstring>
+#include <iostream>
+#include <list>
+#include <map>
+#include <queue>
+#include <random>
+#include <set>
+#include <stack>
+#include <string>
+#include <utility>
+#include <unordered_set>
+#include <unordered_map>
+#include <vector>
+
+#define ll long long
+#define uint unsigned int
+#define pii pair <int , int>
+#define pis pair <int, string>
+
+#define pb push_back
+#define mp make_pair
+#define all(x) x.begin(), x.end()
+#define fi first
+#define se second
+
+#define forn(i, n) for (int i = 0; i < n; ++i)
+#define foru(i, a, b) for (int i = a; i <= b; ++i) 
+#define ford(i, a, b) for (int i = a; i >= b; --i)
+#define w(t) while(t--)
+
+const int N = 14062003;
+
+using namespace std;
+
+void solve(){
+    int n;
+    cin >> n;
+    vector<vector<ll>> a(n);
+    vector<int> u(n), s(n);
+    forn(i, n) {
+        cin >> u[i];
+        --u[i];
+    }
+    forn(i, n) cin >> s[i];
+
+    forn(i, n) a[u[i]].pb(s[i]);
+
+    forn(i, n) sort(all(a[i]));
+    forn(i, n)
+        forn(j, a[i].size()){
+            if (j > 0) a[i][j] += a[i][j-1];
+        }
+    vector<ll> res(n, 0);
+    forn(i, n) {
+        int m = a[i].size();
+        foru (k, 1, m) 
+            res[k-1] += a[i][m-1] - (m % k != 0 ? a[i][m % k - 1] : 0);
+    }
+    forn(i, n) cout << res[i] << " ";
+    cout << "\n";
+}
+
+int main(){
+    ios::sync_with_stdio(0);
+    cin.tie(0); cout.tie(0);
+    int t = 1;
+    cin >> t;
+    w(t) {
+        solve();
+    }
+    return 0;
+}
